@@ -31,7 +31,9 @@ Os três arquivos HTML devem permanecer na mesma pasta para preservar a navegaç
 
 Esta versão mantém o MVP original e acrescenta a ligação com a experiência de lembrança. A navegação entre as duas experiências foi conferida no navegador após a publicação.
 
-O uso de câmera e galeria deve ser validado nos dispositivos de destino. A câmera depende das permissões do navegador. Recursos apresentados como futuros no MVP, incluindo VLibras, não devem ser considerados implementados apenas por constarem na interface; também é necessária validação com leitores de tela e em dispositivos reais.
+O teste no navegador de um dispositivo móvel foi realizado e aprovado por Jessica Costa em 20/11/2026. A câmera depende das permissões do navegador.
+
+Recursos apresentados como futuros no MVP, incluindo VLibras, não devem ser considerados implementados apenas por constarem na interface; a validação com leitores de tela também permanece pendente.
 
 ## Créditos
 

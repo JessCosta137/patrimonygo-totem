@@ -8,6 +8,6 @@ A experiência de lembrança permite escolher um personagem, usar uma foto da c�
 
 Sua foto fica no seu dispositivo, sem envio para IA ou armazenamento no PatrimonyGO. Você escolhe se deseja salvar ou compartilhar sua lembrança.
 
-Mantenha index.html, mvp.html e totem.html na mesma pasta. Publique por HTTPS. A navegação entre MVP e experiência de lembrança foi conferida no navegador; câmera e galeria devem ser validadas nos dispositivos de destino.
+Mantenha index.html, mvp.html e totem.html na mesma pasta. Publique por HTTPS. A navegação entre MVP e experiência de lembrança foi conferida no navegador. Teste no navegador de um dispositivo móvel realizado e aprovado por Jessica Costa em 20/11/2026.
 
 Autoria original da experiência do Totem: Kayo Viana Oliveira.
