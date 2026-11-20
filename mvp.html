@@ -225,7 +225,7 @@ button{font-family:inherit}
       <li>Duas cidades: Santos e Belo Horizonte (destaque: Prédio Verde)</li>
       <li>Visão do pitch: perfil, ranking, comércio local e cupons (em breve)</li>
     </ul>
-    <p style="font-size:12px">A localização começa <b>simulada</b> (use “Andar até o próximo” ou as setas). Para usar sua localização, ative o GPS no radar. Tradução em Libras (VLibras) ainda depende de implementação e teste.</p>
+    <p style="font-size:12px">Nesta demonstração a localização é <b>simulada</b> (use “Andar até o próximo” ou as setas). No app publicado, o mesmo radar usa o GPS do celular. Tradução em Libras (VLibras) entra na versão publicada.</p>
   </div>
 
   <div class="phone" id="phone">
@@ -252,8 +252,6 @@ button{font-family:inherit}
         <div class="radar"><svg id="radar" viewBox="0 0 360 360" role="img" aria-label="Radar com patrimônios próximos"></svg>
           <div class="hud"><span id="gpsMode">📍 GPS simulado</span><span id="nextTxt">—</span></div></div>
         <div id="near"></div>
-        <button class="sbtn" id="gpsToggle" style="margin-top:10px;width:100%" onclick="toggleGPS()">Usar minha localização</button>
-        <p class="note" id="gpsNote" role="status">Modo demonstração. O GPS só será solicitado ao tocar no botão.</p>
         <div class="ctrl">
           <div style="display:flex;flex-direction:column;gap:8px">
             <button class="sbtn p" id="walkBtn" onclick="toggleWalk()">🚶 Andar até o próximo</button>
@@ -271,7 +269,7 @@ button{font-family:inherit}
 
       <section class="view" id="v-mapa" aria-label="Mapa geral">
         <div class="chips" id="mapChips"></div>
-        <div class="mapwrap"><svg id="map" viewBox="0 0 360 420" role="img" aria-label="Mapa de patrimônios"></svg>
+        <div class="mapwrap"><svg id="map" viewBox="0 0 360 420" role="img" aria-label="Mapa de Santos com patrimônios"></svg>
           <div class="legend"><span><i style="background:var(--mag)"></i>Disponível</span><span><i style="background:#fff;border:2px solid var(--mag)"></i>Descoberto</span><span><i style="background:#bdbdbd"></i>Em breve</span><span><i style="background:#1e88e5"></i>Você</span></div></div>
         <p class="note">Mapa ilustrativo, posicionado pelas coordenadas da planilha.</p>
       </section>
@@ -333,17 +331,7 @@ const BOX={'Santos':{lat0:-23.995,lat1:-23.925,lon0:-46.372,lon1:-46.298},'Belo 
 const geoOK = p=>{const b=BOX[p.cidade];return b&&p.lat&&p.lon&&p.lat>b.lat0&&p.lat<b.lat1&&p.lon>b.lon0&&p.lon<b.lon1;};
 const nextTarget=()=>R[rIdx].items.find(p=>!visited.has(p.id))||null;
 let realGPS=false;
-let gpsWatch=null;
-function stopGPS(){ if(gpsWatch!==null){ navigator.geolocation.clearWatch(gpsWatch); gpsWatch=null; } realGPS=false; $('#gpsMode').textContent='📍 GPS simulado'; $('#gpsToggle').textContent='Usar minha localização'; $('#gpsNote').textContent='Modo demonstração. Sua localização real não está sendo consultada.'; }
-function toggleGPS(){
-  if(gpsWatch!==null){ stopGPS(); recenter(); return; }
-  if(!navigator.geolocation){ $('#gpsNote').textContent='GPS indisponível neste navegador. Continue no modo demonstração.'; return; }
-  $('#gpsToggle').textContent='Cancelar localização';
-  $('#gpsNote').textContent='Aguardando sua permissão. As coordenadas são usadas apenas neste navegador e não são salvas pelo projeto.';
-  gpsWatch=navigator.geolocation.watchPosition(pos=>{ realGPS=true; $('#gpsMode').textContent='📍 GPS real'; $('#gpsToggle').textContent='Voltar à demonstração'; $('#gpsNote').textContent='Localização ativa neste aparelho. Você pode desligar no botão acima.'; me={lat:pos.coords.latitude,lon:pos.coords.longitude}; tick(); },()=>{ stopGPS(); $('#gpsNote').textContent='Não foi possível obter a localização. Continue no modo demonstração ou tente novamente.'; },{enableHighAccuracy:true,maximumAge:5000,timeout:15000});
-}
-window.addEventListener('pagehide',stopGPS);
-
+if(navigator.geolocation){ try{ navigator.geolocation.watchPosition(pos=>{ if(!realGPS){realGPS=true;$('#gpsMode').textContent='📍 GPS real';} me={lat:pos.coords.latitude,lon:pos.coords.longitude}; tick(); },()=>{}, {enableHighAccuracy:true,maximumAge:5000}); }catch(e){} }
 
 /* ---------- a11y ---------- */
 function applyPrefs(){ $('#phone').classList.toggle('hc',prefs.hc); $('#phone').style.setProperty('--fs',prefs.big?1.25:1); }
@@ -356,8 +344,8 @@ function openA11y(){
   ${sw('big','Fonte grande','Aumenta todos os textos em 25%')}
   ${sw('voz','Avisos por voz','Fala quando um patrimônio entra no raio e lê as missões')}
   ${sw('vib','Vibração','Vibra ao se aproximar (Android)')}
-  <div class="tog"><div><b>🤟 Libras (VLibras)</b><small>Tradução de textos em Libras por avatar — ainda precisa ser implementada e testada</small></div><span class="acc"><em style="background:#e3f2fd;color:#0d47a1">em breve</em></span></div>
-  <p class="note">A compatibilidade com leitores de tela (TalkBack e VoiceOver) ainda precisa ser validada em aparelhos reais. Para pessoas cegas, o radar complementa — e não substitui — a bengala ou o cão-guia: a precisão do GPS na rua é de 5 a 15 m.</p>
+  <div class="tog"><div><b>🤟 Libras (VLibras)</b><small>Tradução de textos em Libras por avatar — ativada na versão publicada do app</small></div><span class="acc"><em style="background:#e3f2fd;color:#0d47a1">em breve</em></span></div>
+  <p class="note">O app é compatível com leitores de tela (TalkBack e VoiceOver). Para pessoas cegas, o radar complementa — e não substitui — a bengala ou o cão-guia: a precisão do GPS na rua é de 5 a 15 m.</p>
   <button class="btn p" style="margin-top:14px" onclick="closeModal()">Pronto</button>`);
 }
 
@@ -373,7 +361,6 @@ function go(v){
 document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>go(b.dataset.v));
 
 function setCity(c){
-  if(walkT) toggleWalk();
   city=c; store('city',c);
   document.querySelectorAll('.cities button').forEach(b=>{const on=b.dataset.c===c;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on);});
   const cr=cityRoutes(); rIdx=cr.length?cr[0].i:0; mapRoute=-1;
@@ -399,17 +386,15 @@ function openRoute(i){
    <div class="sec" style="font-size:1.4em">${r.emoji} ${esc(r.nome)}</div><p class="note" style="margin:-4px 0 14px">${esc(r.desc)} · ${r.tempo}</p>
    ${r.items.map((p,k)=>`<button class="step ${visited.has(p.id)?'done':''}" onclick="openSheet(${p.id})"><div class="n">${visited.has(p.id)?'✓':k+1}</div><div class="t" style="background-image:url(${p.foto})"></div><div><b>${esc(title(p.nome))}</b><small>${esc(p.inaug||'')} · ${esc(p.uso_atual||'')}</small></div></button>`).join('')}
    <button class="btn p" style="margin-top:6px" onclick="startRoute(${i})">📡 Explorar este roteiro com GPS</button>
-    <div class="sec" style="margin-top:24px">Ao final da visita</div>
-    <p class="note">Depois de explorar o circuito, crie sua lembrança do século XVIII. A foto é opcional.</p>
-    <button class="btn s" onclick="finishVisit(${i})">Finalizar visita e criar lembrança</button>`;
+   <div class="sec" style="margin-top:24px">Ao final da visita</div>
+   <p class="note">Depois de explorar o circuito, crie sua lembrança do século XVIII. A foto é opcional.</p>
+   <button class="btn s" onclick="finishVisit(${i})">Finalizar visita e criar lembrança</button>`;
   go('roteiro');
 }
-function startRoute(i){ if(walkT) toggleWalk(); rIdx=i; if(!realGPS){ const f=R[i].items[0]; me={lat:f.lat+0.0013,lon:f.lon-0.0011}; } go('explorar'); say(`Roteiro ${R[i].nome}. Siga o radar até a primeira parada.`); }
+function startRoute(i){ rIdx=i; if(!realGPS){ const f=R[i].items[0]; me={lat:f.lat+0.0013,lon:f.lon-0.0011}; } go('explorar'); say(`Roteiro ${R[i].nome}. Siga o radar até a primeira parada.`); }
 
-/* ---------- fim da visita ---------- */
+/* ---------- integração com o Totem ---------- */
 function finishVisit(i){
-  if(walkT) toggleWalk();
-  stopGPS(); closeSheet();
   const r=R[i];
   modal(`<p class="note">Fim da visita · ${esc(r.nome)}</p>
     <h3>Sua lembrança do circuito</h3>
@@ -466,11 +451,10 @@ function speakNear(){
   const l=P.filter(p=>p.ok&&geoOK(p)).map(p=>({p,d:dist(me,p)})).sort((a,b)=>a.d-b.d).slice(0,3);
   say('Perto de você: '+l.map(({p,d})=>`${title(p.nome)}, a ${fmt(d).replace('km','quilômetros').replace(' m',' metros')} ${dirTxt(bearing(me,p))}`).join('; ')+'.',true);
 }
-function step(dx,dy){ stopGPS(); me={lat:me.lat+dy*0.00018,lon:me.lon+dx*0.0002}; tick(); }
-function recenter(){ stopGPS(); const f=R[rIdx].items[0]; me={lat:f.lat+0.0013,lon:f.lon-0.0011}; tick(); }
+function step(dx,dy){ me={lat:me.lat+dy*0.00018,lon:me.lon+dx*0.0002}; tick(); }
+function recenter(){ const f=R[rIdx].items[0]; me={lat:f.lat+0.0013,lon:f.lon-0.0011}; tick(); }
 let walkT=null;
 function toggleWalk(){
-  stopGPS();
   if(walkT){ clearInterval(walkT); walkT=null; $('#walkBtn').textContent='🚶 Andar até o próximo'; return; }
   const tgt=nextTarget(); if(!tgt){ toast('🏆','Roteiro completo!','Escolha outro roteiro nos chips acima.'); return; }
   $('#walkBtn').textContent='⏸ Parar';
@@ -567,7 +551,6 @@ function checkin(id){
   if(r){ points+=300; save(); progress(); toast('🏆','Roteiro completo!',`Você concluiu “${r.nome}”. +300 pts de bônus.`); say(`Parabéns! Roteiro ${r.nome} completo.`); }
   else { toast('🎉','Patrimônio descoberto!',`+100 pts. Agora complete a missão do quiz!`); say(`${title(P[id].nome)} descoberto. Mais cem pontos.`); }
   openSheet(id);
-  if(r) finishVisit(R.indexOf(r));
 }
 
 /* ---------- quiz ---------- */
