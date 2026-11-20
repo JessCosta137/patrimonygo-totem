@@ -1,9 +1,13 @@
-PatrimonyGO — MVP com Totem no fim da visita
+PatrimonyGO — MVP e experiência de lembrança
 
-Abra index.html para começar pelo MVP. Ao concluir um roteiro, a aplicação oferece a etapa final. Também é possível encerrar a visita pelo botão Finalizar visita e criar lembrança, no fim da tela do roteiro ou do radar. Encerrar a visita não marca paradas nem concede pontos automaticamente.
+Abra index.html para começar pelo MVP. mvp.html é uma entrada alternativa para a mesma experiência.
 
-Continuar para o Totem abre totem.html com a mensagem Você chegou ao fim do circuito! e a escolha de personagem. O Totem preserva o JavaScript cuja câmera e galeria foram testadas por Jess no celular. Depois, a pessoa pode salvar, compartilhar, tirar outra foto ou voltar ao MVP.
+Explore uma cidade e um roteiro. Ao final da visita, selecione Finalizar visita e criar lembrança e depois Criar minha lembrança. Essa etapa abre totem.html. A participação é opcional. Encerrar a visita não marca paradas nem concede pontos automaticamente.
 
-Mantenha os três HTML na mesma pasta. mvp.html é um endereço alternativo de entrada. Publique por HTTPS.
+A experiência de lembrança permite escolher um personagem, usar uma foto da câmera ou da galeria e criar uma montagem. Voltar ao início retorna ao MVP.
 
-Autoria original do Totem: Kayo Viana Oliveira. A integração completa requer teste de percurso após publicação.
+Sua foto fica no seu dispositivo, sem envio para IA ou armazenamento no PatrimonyGO. Você escolhe se deseja salvar ou compartilhar sua lembrança.
+
+Mantenha index.html, mvp.html e totem.html na mesma pasta. Publique por HTTPS. A navegação entre MVP e experiência de lembrança foi conferida no navegador; câmera e galeria devem ser validadas nos dispositivos de destino.
+
+Autoria original da experiência do Totem: Kayo Viana Oliveira.
