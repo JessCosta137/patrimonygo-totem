@@ -1,0 +1,9 @@
+PatrimonyGO — MVP com Totem no fim da visita
+
+Abra index.html para começar pelo MVP. Ao concluir um roteiro, a aplicação oferece a etapa final. Também é possível encerrar a visita pelo botão Finalizar visita e criar lembrança, no fim da tela do roteiro ou do radar. Encerrar a visita não marca paradas nem concede pontos automaticamente.
+
+Continuar para o Totem abre totem.html com a mensagem Você chegou ao fim do circuito! e a escolha de personagem. O Totem preserva o JavaScript cuja câmera e galeria foram testadas por Jess no celular. Depois, a pessoa pode salvar, compartilhar, tirar outra foto ou voltar ao MVP.
+
+Mantenha os três HTML na mesma pasta. mvp.html é um endereço alternativo de entrada. Publique por HTTPS.
+
+Autoria original do Totem: Kayo Viana Oliveira. A integração completa requer teste de percurso após publicação.
